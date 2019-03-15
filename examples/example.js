@@ -1,6 +1,3 @@
-//hack for annoying bitcore error involving more than instance. They have something odd going on in their 
-//package requirements setup
-Object.defineProperty(global, '_bitcore', { get(){ return undefined }, set(){} })
 const orbitWallet = require("../index");
 const Wallet = orbitWallet.Wallet;
 

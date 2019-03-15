@@ -1,12 +1,10 @@
 # orbit-db-wallet
-This package contains a wallet that creates a wallet for ipfs, orbitdb based on a bip39 seed phrase. It AES encrypts those keys based on a user supplied pass phrase and saves them in localstorage. In the future I may move from localstorage to IndexedDB for storage. 
+This package contains a wallet for ipfs, orbitdb based on a bip39 seed phrase. It AES encrypts those keys based on a user supplied pass phrase and saves them in localstorage. In the future I may move from localstorage to IndexedDB for storage. 
 
 ## Example Usage
 You can view the code in examples/example.js
 ```javascript
-//hack for annoying bitcore error involving more than instance. They have something odd going on in their 
-//package requirements setup
-Object.defineProperty(global, '_bitcore', { get(){ return undefined }, set(){} })
+
 const orbitWallet = require("../index");
 const Wallet = orbitWallet.Wallet;
 
