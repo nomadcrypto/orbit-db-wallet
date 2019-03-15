@@ -1,0 +1,31 @@
+{
+  "name": "orbit-db-wallet",
+  "version": "0.0.1",
+  "description": "A wallet for storing IPFS, OrbitDB and bip39 seeds",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ipfs",
+    "orbitdb",
+    "bip39",
+    "rsa"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nomadcrypto/orbit-db-wallet"
+  },
+  "author": "nomadcrypto@gmail.com",
+  "license": "MIT",
+  "dependencies": {
+    "aes-js": "3.1.2",
+    "bip39": "2.5.0",
+    "bitcore-lib": "8.1.0",
+    "ipfs": "0.33.0",
+    "js-sha256": "0.9.0",
+    "lru": "3.1.0",
+    "orbit-db": "0.19.9",
+    "seededrsa": "1.1.0"
+  }
+}
