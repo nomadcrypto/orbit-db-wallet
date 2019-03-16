@@ -59,9 +59,26 @@ if(!wallet.isSetup()) {
 ```
 
 ## Example usage as site password store
-if your password should be compromised and you need a new password you can increment the 3rd arugment which is "num". There is no storage required for this since we derive keys based on a 256 hash of the site name provided. 
+if your password should be compromised and you need a new password you can increment the 3rd arugment which is password index. There is no storage required for this since we derive keys based on a 256 hash of the site name provided. 
+The proposed derivation path would follow the bip44 standard like this:
+ m / 44' / 60' / account' / change / address_index
+
+ where 44 is the stanard(bip44)
+ where 60 is the type(etherum, bitcoin, rsa, website, etc)
+ where account is the xmur3 hash of the sha256 hash of the website name
+ where address_index is the number of password
+ change is always 0
+
+ I suggest xmur31(sha256("passwords")) for the type which is 1626018612. This allows for virtually inifinte types in the HD tree
+ we do this again for the website. So google.com is: 1191255504, facebook: 591925166, etc. utils.xmur31 generates a 32 bit number from a given string and then returns that mod max 31 bit integer. The reason for this is hardened keys require a max of 31bit numbers. 
+
+ the derivation path for the first password at google.com would be
+ m/44'/1626018612'/1191255504'/0/0
+ the second password should the first get compromised:
+ m/44'/1626018612'/1191255504'/0/1
+ and so on. 
 ```javascript
 password = "password";
-let gpassword = await wallet.passwordForSite(password, "Google.com",1)
+let gpassword = await wallet.passwordForSite(password, "google.com",1)
 console.log("Password for google", gpassword)
 ```

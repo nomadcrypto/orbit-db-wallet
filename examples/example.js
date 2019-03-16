@@ -27,6 +27,8 @@ async function example(wallet) {
     // Query
     const result = db.iterator({ limit: -1 }).collect()
     console.log(JSON.stringify(result, null, 2))
+    let gpassword = await wallet.passwordForSite(password, "google.com",1)
+    console.log("Password for google", gpassword)
 
     
   })
