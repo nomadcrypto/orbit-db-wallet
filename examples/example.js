@@ -8,12 +8,15 @@ async function example(wallet) {
   const ipfs = await wallet.getIPFS()
   ipfs.on("error", (e) => console.error(e))
   ipfs.on('ready', async () => {
-    const orbitdb = await wallet.getOrbitDB(ipfs, "./test" + Math.random())
-    const db = await orbitdb.create("test", 'eventlog', {
+    //const orbitdb = await wallet.getOrbitDB(ipfs, "./test" + Math.random())
+    const orbitdb = await await wallet.getOrbitDB(ipfs);
+
+    /*const db = await orbitdb.create("test", 'eventlog', {
         write: [
             orbitdb.key.getPublic("hex")
         ]
-    })
+    })*/
+    const db = await orbitdb.log('hello')
 
     db.load()
     db.events.on('replicated', (address) => {

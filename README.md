@@ -4,22 +4,18 @@ This package contains a wallet for ipfs, orbitdb and any other site based on a b
 ## Example Usage for IPFS and OrbitDB
 You can view the code in examples/example.js
 ```javascript
-
 const orbitWallet = require("../index");
 const Wallet = orbitWallet.Wallet;
 
 
 async function example(wallet) {
   //do example stuff here
+  
   const ipfs = await wallet.getIPFS()
   ipfs.on("error", (e) => console.error(e))
   ipfs.on('ready', async () => {
-    const orbitdb = await wallet.getOrbitDB(ipfs, "./test" + Math.random())
-    const db = await orbitdb.create("test", 'eventlog', {
-        write: [
-            orbitdb.key.getPublic("hex")
-        ]
-    })
+    const orbitdb = await await wallet.getOrbitDB(ipfs);
+    const db = await orbitdb.log('hello')
 
     db.load()
     db.events.on('replicated', (address) => {
@@ -33,6 +29,10 @@ async function example(wallet) {
     // Query
     const result = db.iterator({ limit: -1 }).collect()
     console.log(JSON.stringify(result, null, 2))
+    let gpassword = await wallet.passwordForSite(password, "google.com",1)
+    console.log("Password for google", gpassword)
+
+    
   })
   
 }

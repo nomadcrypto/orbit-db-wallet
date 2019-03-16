@@ -22,10 +22,20 @@
     "aes-js": "3.1.2",
     "bip32": "^1.0.2",
     "bip39": "2.5.0",
-    "ipfs": "^0.33.0",
     "js-sha256": "0.9.0",
     "lru": "3.1.0",
-    "orbit-db": "0.19.9",
-    "seededrsa": "1.1.0"
+    "seededrsa": "1.1.0",
+    "@colony/purser-software": "^1.1.2",
+    "datastore-level": "~0.10.0",
+    "ganache-cli": "^6.3.0",
+    "go-ipfs-dep": "^0.4.18",
+    "ipfs": "^0.34.0",
+    "ipfs-repo": "^0.26.1",
+    "ipfsd-ctl": "^0.40.3",
+    "orbit-db": "https://github.com/orbitdb/orbit-db#feat/backwards-compatible",
+    "orbit-db-identity-provider": "github:orbitdb/orbit-db-identity-provider",
+    "orbit-db-keystore": "github:orbitdb/orbit-db-keystore",
+    "standard": "^12.0.1",
+    "web3": "1.0.0-beta.37"
   }
 }
