@@ -4,6 +4,7 @@ const Wallet = orbitWallet.Wallet;
 
 async function example(wallet) {
   //do example stuff here
+  
   const ipfs = await wallet.getIPFS()
   ipfs.on("error", (e) => console.error(e))
   ipfs.on('ready', async () => {
@@ -26,6 +27,8 @@ async function example(wallet) {
     // Query
     const result = db.iterator({ limit: -1 }).collect()
     console.log(JSON.stringify(result, null, 2))
+
+    
   })
   
 }

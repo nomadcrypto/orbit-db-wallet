@@ -1,7 +1,7 @@
 # orbit-db-wallet
-This package contains a wallet for ipfs, orbitdb based on a bip39 seed phrase. It AES encrypts those keys based on a user supplied pass phrase and saves them in localstorage. In the future I may move from localstorage to IndexedDB for storage. 
+This package contains a wallet for ipfs, orbitdb and any other site based on a bip39 seed phrase. It AES encrypts those keys based on a user supplied pass phrase and saves them in localstorage. In the future I may move from localstorage to IndexedDB for storage. 
 
-## Example Usage
+## Example Usage for IPFS and OrbitDB
 You can view the code in examples/example.js
 ```javascript
 
@@ -56,4 +56,12 @@ if(!wallet.isSetup()) {
 } else {
   example(wallet);
 }
+```
+
+## Example usage as site password store
+if your password should be compromised and you need a new password you can increment the 3rd arugment which is "num". There is no storage required for this since we derive keys based on a 256 hash of the site name provided. 
+```javascript
+password = "password";
+let gpassword = await wallet.passwordForSite(password, "Google.com",1)
+console.log("Password for google", gpassword)
 ```
