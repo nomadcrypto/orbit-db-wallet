@@ -1,19 +1,17 @@
 const orbitWallet = require("../index");
 const Wallet = orbitWallet.Wallet;
-const IPFSAccessController = require("orbit-db-access-controllers/src/ipfs-access-controller")
+const OrbitDBAccessController = require("orbit-db-access-controllers/src/orbitdb-access-controller")
 
-class OtherAccessController extends IPFSAccessController {
+
+class OtherAccessController extends OrbitDBAccessController {
 
   static get type () { return 'othertype' } // Return the type for this controller
 
   async canAppend(entry, identityProvider) {
+    
     // Allow if access list contain the writer's publicKey or is '*'
     const publicKey = entry.v === 0 ? entry.key : entry.identity.publicKey
-    console.log(publicKey)
-    if (this.write.includes(publicKey) ||
-      this.write.includes('*')) {
-      return true
-    }
+    console.log("can append", publicKey)
     return false
   }
 }
@@ -27,14 +25,11 @@ async function example(wallet) {
   ipfs.on("error", (e) => console.error(e))
   ipfs.on('ready', async () => {
     let id = await ipfs.id();
-    console.log("ID", id)
     let AccessControllers = require('orbit-db-access-controllers')
-    //let ac = new AccessControllers()
     AccessControllers.addAccessController({ AccessController: OtherAccessController })
-    //console.log(ac)
 
     const orbitdb = await wallet.getOrbitDB(ipfs, {AccessControllers: AccessControllers});
-    //console.log(orbitdb)
+    console.log(orbitdb)
     const db = await orbitdb.log('hello2', {
       accessController : {
         type: 'othertype',
@@ -43,6 +38,7 @@ async function example(wallet) {
     })
 
     db.load()
+    console.log(db.address)
     db.events.on('replicated', (address) => {
         console.log(db.iterator({ limit: -1 }).collect())
     })
