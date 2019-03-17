@@ -1,18 +1,24 @@
 const orbitWallet = require("../index");
 const Wallet = orbitWallet.Wallet;
 const OrbitDBAccessController = require("orbit-db-access-controllers/src/orbitdb-access-controller")
-
+const AccessController = require("orbit-db-access-controllers/src/access-controller-interface")
+const pMapSeries = require('p-map-series')
 
 class OtherAccessController extends OrbitDBAccessController {
 
   static get type () { return 'othertype' } // Return the type for this controller
 
-  async canAppend(entry, identityProvider) {
-    
-    // Allow if access list contain the writer's publicKey or is '*'
-    const publicKey = entry.v === 0 ? entry.key : entry.identity.publicKey
-    console.log("can append", publicKey)
-    return false
+
+  static async create (orbitdb, options = {}) {
+    const ac = new OtherAccessController(orbitdb, options)
+    await ac.load(options.address || 'default-access-controller')
+
+    // Add write access from options
+    if (options.write && !options.address) {
+      await pMapSeries(options.write, async (e) => ac.grant('write', e))
+    }
+
+    return ac
   }
 }
 
@@ -30,10 +36,10 @@ async function example(wallet) {
 
     const orbitdb = await wallet.getOrbitDB(ipfs, {AccessControllers: AccessControllers});
     console.log(orbitdb)
-    const db = await orbitdb.log('hello2', {
+    const db = await orbitdb.log('hello3', {
       accessController : {
         type: 'othertype',
-        write: [orbitdb.identity.publicKey]
+        write: []
       }
     })
 
